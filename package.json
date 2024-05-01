@@ -15,8 +15,8 @@
     "build": "next build",
     "start": "next start",
     "export": "next build && next export",
-    "lint": "eslint --ignore-path .gitignore --fix",
-    "format": "prettier --ignore-path .gitignore \"pages/**/*.+(ts|js|tsx)\" --write",
+    "lint": "eslint --fix",
+    "format": "prettier \"pages/**/*.+(ts|js|tsx)\" --write",
     "postinstall": "husky install"
   },
   "lint-staged": {
@@ -26,9 +26,15 @@
     ]
   },
   "dependencies": {
+    "@mui/icons-material": "5.15.15",
+    "@mui/material": "5.15.15",
+    "axios": "1.6.8",
+    "dotenv": "16.4.5",
     "next": "14.2.3",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-code-blocks": "0.1.6",
+    "react-dom": "18.3.1",
+    "viem": "2.9.29"
   },
   "devDependencies": {
     "@emotion/react": "11.11.4",

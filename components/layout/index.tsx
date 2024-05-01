@@ -11,12 +11,7 @@ export function Layout({ children }: { children: ReactNode }) {
               className="text-link hover:text-link-light transition-colors no-underline [&_code]:text-link [&_code]:hover:text-link-light [&_code]:transition-colors"
               href="/"
             >
-              <span>
-                <svg height={26} viewBox="0 0 75 65" fill="#000">
-                  <title>Vercel Logo</title>
-                  <path d="M37.59.25l36.95 64H.64l36.95-64z" />
-                </svg>
-              </span>
+              <img src="/foundry-logo.png" alt="Foundry Framework" width={40} />
             </Link>
             <ul className="flex items-center content-center">
               <li className="ml-2 text-gray-200">
@@ -41,7 +36,7 @@ export function Layout({ children }: { children: ReactNode }) {
                   rel="noreferrer"
                   href="https://github.com/chhpt/nextjs-starter"
                 >
-                  Next.js Starter
+                  Foundry Whale Token Dealer
                 </a>
               </li>
             </ul>
@@ -52,22 +47,22 @@ export function Layout({ children }: { children: ReactNode }) {
                 <a
                   data-variant="ghost"
                   className="relative inline-flex items-center justify-center cursor pointer no-underline px-3.5 rounded-md font-medium outline-0 select-none align-middle whitespace-nowrap transition-colors ease-in duration-200 text-success hover:bg-[rgba(0,68,255,0.06)] h-10 leading-10 text-[15px]"
-                  href="https://github.com/vercel/examples/tree/main"
+                  href="https://github.com/codeislight1"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  More Examples →
+                  By CodeIsLight
                 </a>
               </span>
               <span className="flex items-center h-full ml-2 cursor-not-allowed text-accents-5">
                 <a
-                  data-variant="primary"
-                  className="relative inline-flex items-center justify-center cursor pointer no-underline px-3.5 rounded-md font-medium outline-0 select-none align-middle whitespace-nowrap transition-colors ease-in duration-200 border border-solid text-background bg-success border-success-dark hover:bg-success/90 shadow-[0_5px_10px_rgb(0,68,255,0.12)] h-10 leading-10 text-[15px]"
-                  href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fchhpt%2Fnextjs-starter&project-name=nextjs-starter&repository-name=nextjs-starter"
+                  data-variant="ghost"
+                  className="relative inline-flex items-center justify-center cursor pointer no-underline px-3.5 rounded-md font-medium outline-0 select-none align-middle whitespace-nowrap transition-colors ease-in duration-200 text-success hover:bg-[rgba(0,68,255,0.06)] h-10 leading-10 text-[15px]"
+                  href="https://github.com/chhpt/nextjs-starter"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Clone &amp; Deploy
+                  Using Next Starter
                 </a>
               </span>
             </nav>
