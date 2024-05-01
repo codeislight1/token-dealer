@@ -117,7 +117,7 @@ _token.transfer(_to, _token.balanceOf(_whale));`
                 },
                 null
               )
-                .then((response) => {
+                .then((response: { data: Object }) => {
                   const res = response.data as {
                     success: boolean
                     result: Array<{
@@ -135,7 +135,7 @@ _token.transfer(_to, _token.balanceOf(_whale));`
                     setUsdAmount(Number(res.result[0].usd_value).toFixed(2))
                   }
                 })
-                .catch((error) => console.log('⭕ error while querying:', error))
+                .catch((error: Object) => console.log('⭕ error while querying:', error))
             }}
           >
             GET WHALE 🐋
