@@ -1,0 +1,52 @@
+{
+  "name": "nextjs-starter",
+  "description": "A Next.js starter that includes all you need to build amazing projects",
+  "version": "1.0.0",
+  "private": true,
+  "author": "abel chang<cwuyiqing@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "nextjs",
+    "starter",
+    "typescript"
+  ],
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "export": "next build && next export",
+    "lint": "eslint --ignore-path .gitignore --fix",
+    "format": "prettier --ignore-path .gitignore \"pages/**/*.+(ts|js|tsx)\" --write",
+    "postinstall": "husky install"
+  },
+  "lint-staged": {
+    "./**/*.{ts,js,jsx,tsx}": [
+      "pnpm run lint",
+      "pnpm run format"
+    ]
+  },
+  "dependencies": {
+    "next": "14.2.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@emotion/react": "11.11.4",
+    "@emotion/styled": "11.11.5",
+    "@types/node": "20.12.7",
+    "@types/react": "18.3.1",
+    "@types/react-dom": "18.3.0",
+    "@typescript-eslint/eslint-plugin": "7.7.1",
+    "@typescript-eslint/parser": "7.7.1",
+    "autoprefixer": "10.4.19",
+    "eslint": "9.1.1",
+    "eslint-config-alloy": "5.1.2",
+    "eslint-config-next": "14.2.3",
+    "husky": "9.0.11",
+    "lint-staged": "15.2.2",
+    "postcss": "8.4.38",
+    "prettier": "3.2.5",
+    "tailwindcss": "3.4.3",
+    "typescript": "5.4.5"
+  }
+}
