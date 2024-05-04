@@ -1,10 +1,10 @@
-// import Head from 'next/head'
-// import styles from '@/styles/Home.module.css'
-import { NETWORKS } from '@/src/config'
+import { NETWORKS, uniswapTokensListUrl } from '@/src/config'
 import {
+  Autocomplete,
   Box,
   Button,
   FormControl,
+  FormControlLabel,
   IconButton,
   InputLabel,
   List,
@@ -12,20 +12,43 @@ import {
   MenuItem,
   Modal,
   Select,
+  Switch,
   TextField,
   Typography,
 } from '@mui/material'
 import { useState } from 'react'
 import { CopyBlock, dracula } from 'react-code-blocks'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { ChainBase } from '@/src/ChainBase'
 import { isAddress } from 'viem'
 import Link from 'next/link'
 
-export default function Home() {
+export const getStaticProps = async () => {
+  const axios = require('axios')
+  const res = await axios({
+    url: uniswapTokensListUrl,
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+    },
+  })
+
+  let tokensList: any = {}
+  let tokens = res.data.tokens
+  Object.values(NETWORKS).map((id) => {
+    let _tokens = tokens.filter((t: any) => t['chainId'] === id)
+    _tokens = _tokens.map((t: any) => ({ ...t, label: `${t['symbol']} | ${t['name']}` }))
+    tokensList[id] = _tokens
+  })
+  // console.log('json token list res', res)
+
+  return { props: { tokensList } }
+}
+
+export default function Home({ tokensList }: { tokensList: any }) {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const [checked, setChecked] = useState(true)
 
   const [network, setNetwork] = useState('1')
   const [token, setToken] = useState('')
@@ -50,11 +73,28 @@ address _to = address(0); // set 'address(0)' to the receiver
 vm.prank(_whale);
 _token.transfer(_to, _token.balanceOf(_whale));`
 
+  console.log('lol', tokensList[network])
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <List sx={{ width: '600px' }}>
-        <ListItem sx={{ justifyContent: 'right' }}>
-          <IconButton color="primary" onClick={handleOpen}>
+        <ListItem sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <FormControlLabel
+            sx={{ justifyContent: 'flex-start' }}
+            value="top"
+            checked={checked}
+            control={
+              <Switch
+                color="primary"
+                onChange={(e) => {
+                  setChecked(e.target.checked)
+                  setResultStatus(false)
+                }}
+              />
+            }
+            label="Use Token List"
+            labelPlacement="start"
+          />
+          <IconButton sx={{ justifyContent: 'flex-end' }} color="primary" onClick={handleOpen}>
             <SettingsIcon />
           </IconButton>
         </ListItem>
@@ -71,25 +111,43 @@ _token.transfer(_to, _token.balanceOf(_whale));`
                 setNetwork(e.target.value)
               }}
             >
-              {Object.entries(NETWORKS).map(([k, v]) => (
-                <MenuItem value={v.toString()}>{k}</MenuItem>
-              ))}
+              {Object.entries(NETWORKS).map(([k, v]) =>
+                !checked || (tokensList as any)[v].length > 0 ? (
+                  <MenuItem value={v.toString()}>{k}</MenuItem>
+                ) : (
+                  ''
+                )
+              )}
             </Select>
           </FormControl>
         </ListItem>
         <ListItem>
-          <TextField
-            sx={{ width: '100%' }}
-            id="outlined-basic"
-            label="Token Address"
-            variant="outlined"
-            value={token}
-            onChange={(e) => {
-              setToken(e.target.value)
-            }}
-            error={!!token && !isAddress(token)}
-            helperText={!!token && !isAddress(token) && 'Invalid address.'}
-          />
+          {checked ? (
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              onChange={(e, v: any) => {
+                console.log(v)
+                if (v) setToken(v['address'])
+              }}
+              options={tokensList[network] ?? []}
+              sx={{ width: '100%' }}
+              renderInput={(params) => <TextField {...params} label="Token" />}
+            />
+          ) : (
+            <TextField
+              sx={{ width: '100%' }}
+              id="outlined-basic"
+              label="Token Address"
+              variant="outlined"
+              value={token}
+              onChange={(e) => {
+                setToken(e.target.value)
+              }}
+              error={!!token && !isAddress(token)}
+              helperText={!!token && !isAddress(token) && 'Invalid address.'}
+            />
+          )}
         </ListItem>
         <Typography sx={{ display: error ? 'block' : 'none', textAlign: 'center' }} color="error">
           Error Occured
@@ -147,9 +205,10 @@ _token.transfer(_to, _token.balanceOf(_whale));`
             <Typography variant="h5" style={{ marginBottom: '16px' }}>
               Token Details:
             </Typography>
+            {checked && <Typography>Token Address: {token}</Typography>}
             <Typography>Whale Address: {whale}</Typography>
             <Typography>Amount: {amount}</Typography>
-            <Typography>USD Value: {usdAmount}</Typography>
+            {Number(usdAmount) > 0 && <Typography>USD Value: {usdAmount}</Typography>}
             <div style={{ marginBottom: '16px' }}></div>
             <Typography variant="h5" style={{ marginBottom: '16px' }}>
               Snippets:

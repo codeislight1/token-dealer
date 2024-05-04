@@ -9,3 +9,5 @@ export const NETWORKS = {
   zkSync: 324,
   Merlin: 4200,
 }
+
+export const uniswapTokensListUrl = 'https://ipfs.io/ipns/tokens.uniswap.org'
