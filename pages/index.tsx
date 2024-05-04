@@ -39,7 +39,6 @@ export const getStaticProps = async () => {
     _tokens = _tokens.map((t: any) => ({ ...t, label: `${t['symbol']} | ${t['name']}` }))
     tokensList[id] = _tokens
   })
-  // console.log('json token list res', res)
 
   return { props: { tokensList } }
 }
@@ -73,7 +72,6 @@ address _to = address(0); // set 'address(0)' to the receiver
 vm.prank(_whale);
 _token.transfer(_to, _token.balanceOf(_whale));`
 
-  console.log('lol', tokensList[network])
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <List sx={{ width: '600px' }}>
@@ -107,7 +105,6 @@ _token.transfer(_to, _token.balanceOf(_whale));`
               value={network}
               label="Network"
               onChange={(e) => {
-                console.log(e.target.value)
                 setNetwork(e.target.value)
               }}
             >
@@ -127,7 +124,6 @@ _token.transfer(_to, _token.balanceOf(_whale));`
               disablePortal
               id="combo-box-demo"
               onChange={(e, v: any) => {
-                console.log(v)
                 if (v) setToken(v['address'])
               }}
               options={tokensList[network] ?? []}
