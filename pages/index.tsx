@@ -69,8 +69,9 @@ export default function Home({ tokensList }: { tokensList: any }) {
   const solCompact = `ERC20 _token = ERC20(${token});
 address _whale = ${whale};
 address _to = address(0); // set 'address(0)' to the receiver
+uint _amount = _token.balanceOf(_whale);
 vm.prank(_whale);
-_token.transfer(_to, _token.balanceOf(_whale));`
+_token.transfer(_to, _amount);`
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
